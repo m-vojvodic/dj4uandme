@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>I AM DJ.</title>
+    <title>dj4uandme</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     
@@ -21,6 +21,9 @@
                         <input id="song-input" type="text" name="song-input">
                         <a href="#" class="icon" id="song-input-search"></a>
                     </form>
+                </div>
+                <div class="playlist-wrapper" id="pw2">
+                    <ul class="list-search" ></ul>
                 </div>
             </div>
             <div class="column" id="right">
@@ -83,21 +86,42 @@ $(document).ready(function() {
                 $( "#artist-name" ).html( data["tracks"][0]["artist_name"] );
             }
         }); 
-    }, 1000);
+    }, 500);
 });
 </script>
 
 <!-- soundcloud scripts -->
 <script src="http://connect.soundcloud.com/sdk.js"></script>
 <script>
+$(document).keypress(function(e){
+    if (e.which == 13){
+        $("#song-input-search").click();
+    }
+});
+</script>
+    
+<script>
 SC.initialize({
   client_id: 'd36d7236a3819da854cc2a32cf21b6a8'
 });
-// find all sounds of buskers licensed under 'creative commons share alike'
-SC.get('/tracks', { q: 'bvsd' }, function(tracks) {
-  console.log(tracks);
+
+$( "#song-input-search" ).click(function() {
+    console.log("got click!");
+    SC.get('/tracks', { q: $( "#song-input" ).html() }, function(data) {
+        console.log(data);
+            var html_array = data.map(function(data) {
+                return "<li><span class='song-info'>" +
+                    " <span class='playlist-track-name'>" +  
+                    data["title"] + "</span> <span class='playlist-artist-name'>" +
+                    data["user"]["username"] + 
+                    "</span></span><span class='song-actions'><a href='" + 
+                    data["permalink_url"] + "' class='list-icon' id='url'></a></span></li>";
+            });
+
+            $( ".list-search" ).html( html_array.join("") );
+    });
 });
-    
 </script>
+    
 </body>
 </html>

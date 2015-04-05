@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>I AM DJ.</title>
+    <title>dj4uandme</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     
@@ -24,7 +24,7 @@
                         <a href="#" class="icon" id="song-input-search"></a>
                     </form>
                 </div>
-                <div class="playlist-wrapper">
+                <div class="playlist-wrapper" id="pw2">
                     <ul class="list-search" ></ul>
                 </div>
             </div>
@@ -98,7 +98,7 @@ $(document).ready(function() {
                 }
             }
         }); 
-    }, 1000);
+    }, 500);
 });
 </script>
 
@@ -118,13 +118,16 @@ SC.initialize({
 });
 
 $( "#song-input-search" ).click(function() {
-    SC.get('/tracks', { q: $( "#song-input-search" ).html() }, function(data) {
-            var html_array = data.map(function(data) {
+    console.log("got click!");
+    SC.get('/tracks', { q: $( "#song-input" ).html() }, function(data) {
+        console.log(data);
+            var html_array = data.map(function(data) {                
                 return "<li><span class='song-info'>" +
                     " <span class='playlist-track-name'>" +  
                     data["title"] + "</span> <span class='playlist-artist-name'>" +
                     data["user"]["username"] + 
-                    "</span></span></li>";
+                    "</span></span><span class='song-actions'><a href='" + 
+                    data["permalink_url"] + "' class='list-icon' id='url'></a></span></li>";
             });
 
             $( ".list-search" ).html( html_array.join("") );
