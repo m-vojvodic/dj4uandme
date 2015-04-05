@@ -1,0 +1,9 @@
+{
+  "dependencies" : {
+    "mongoose" : "*",
+    "restify" : "*"
+  },
+  "devDependencies" : {
+    "nodemon" : "*"
+  }
+}
