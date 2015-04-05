@@ -5,6 +5,7 @@ var trackSchema = mongoose.Schema({
     track_name : { type: String },
     artist_name : { type: String },
     url : { type: String },
+    stream_url : { type: String },
     votes : { type: Number }
 }),
 Track = mongoose.model('Track', trackSchema);

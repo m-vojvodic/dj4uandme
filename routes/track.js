@@ -4,11 +4,22 @@ var Track = require('../models/track.js');
 
 //server.get('/track/:dj_id', track.retrieveTracks);
 module.exports.retrieveTracks = function(req, res) {
-    Track.find({ dj_id: req.params.dj_id }, function(err, tracks) {
+    Dj.findOne({ dj_id: req.params.dj_id }, function(err, dj) {
         if(err)
             res.send(err);
-        else
-            res.json({ tracks: tracks });
+
+        if(!dj) {
+            res.send({ message: "failure" });
+        }
+        else {
+            console.log("success: " + dj);
+            Track.find({ dj_id: req.params.dj_id }, function(err, tracks) {
+                if(err)
+                    res.send(err);
+                else
+                    res.json({ message: "success", tracks: tracks });
+            });
+        }
     });
 };
 
@@ -20,13 +31,18 @@ module.exports.addTrack = function(req, res) {
     track.track_name = req.body.track_name;
     track.artist_name = req.body.artist_name;
     track.url = req.body.url;
+    track.stream_url = req.body.stream_url;
     track.votes = 0;
+
+    console.log(req.body);
 
     track.save(function(err) {
         if(err)
             res.send(err);
-        else
+        else {
+            console.log(track);
             res.json({ message: 'success' });
+        }
     });
 };
 

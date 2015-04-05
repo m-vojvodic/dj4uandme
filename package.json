@@ -1,7 +1,8 @@
 {
   "dependencies" : {
     "mongoose" : "*",
-    "restify" : "*"
+    "express" : "*",
+    "body-parser" : "*"
   },
   "devDependencies" : {
     "nodemon" : "*"

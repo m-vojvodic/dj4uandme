@@ -2,11 +2,23 @@ var mongoose = require('mongoose');
 var Dj = require('../models/dj.js');
 var Track = require('../models/track.js');
 
+var generateRandomID = function() {
+    var possible_letters = 'abcdefghijklmnopqrstuvwxyz',
+        id = "",
+        i;
+
+    for(i = 0; i < 4; ++i) {
+        id += possible_letters[Math.floor(Math.random() * possible_letters.length)];
+    }
+    // TODO: Search database to make sure no djs
+    return id;
+};
+
 module.exports.createDj = function(req, res) {
     var dj = new Dj;
 
-    // TODO: generate random string
-    dj.dj_id = "abcd";
+    dj.dj_id = generateRandomID();
+    console.log(dj.dj_id);
 
     dj.save(function(err) {
         if(err)

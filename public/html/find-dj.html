@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>I AM DJ.</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,400' rel='stylesheet' type='text/css'>
+</head>
+    
+<body>
+    <div class="container" id="container-find-dj">
+        <a href="../index.html" class="icon" id="exit"></a>
+        <div class="wrapper" id="wrapper-find-dj-opaque"></div>
+        <div class="wrapper" id="wrapper-find-dj">
+            <div class="text-wrapper" id="text-wrapper-search-dj-id">
+                <div class="search" id="search-dj-id">
+                    <form>
+                        <h1 id="enter-dj-id">Enter DJ ID</h1>
+                        <input id="dj-id-input" type="text" name="DJID" maxlength="4">
+                        <a href="#" class="icon" id="next-page"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="../scripts/jquery-2.1.3.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $( "#next-page" ).click(function() {
+        $.ajax({
+            url: "http://localhost:3000/track/" + $( "#dj-id-input" ).val(),
+            type: "GET",
+            success: function( data ) {
+                if(data.message == "failure") {
+                    alert("DJ is not in the booth!");
+                }
+                else {
+                    window.location.href = "./listen.html?dj_id=" + $( "#dj-id-input" ).val();
+                }
+            },
+            error: function() {
+                alert("No such DJ!");
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
